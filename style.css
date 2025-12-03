@@ -1,0 +1,291 @@
+<style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #fef3c7, #e5e7eb);
+    }
+
+    .app {
+      background: #ffffff;
+      padding: 24px 24px 28px;
+      border-radius: 18px;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
+      max-width: 480px;
+      width: 100%;
+    }
+
+    .app-header {
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .app-header h1 {
+      font-size: 1.7rem;
+      font-weight: 700;
+      color: #111827;
+      margin-bottom: 4px;
+    }
+
+    .app-header p {
+      font-size: 0.9rem;
+      color: #6b7280;
+    }
+
+    .result-box {
+      margin: 16px 0 20px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #f3f4ff;
+      border: 1px solid #e5e7eb;
+      text-align: center;
+    }
+
+    .result-label {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #6b7280;
+      margin-bottom: 6px;
+    }
+
+    #result {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #111827;
+      min-height: 1.7em;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+    }
+
+    #result.pop {
+      transform: scale(1.08);
+      opacity: 0.9;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 10px 16px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.08s ease, box-shadow 0.08s ease,
+        background 0.15s ease;
+      white-space: nowrap;
+    }
+
+    #pickBtn {
+      flex: 1;
+      background: #4f46e5;
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(79, 70, 229, 0.3);
+    }
+
+    #pickBtn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(79, 70, 229, 0.35);
+      background: #4338ca;
+    }
+
+    #pickBtn:active {
+      transform: translateY(0);
+      box-shadow: 0 4px 10px rgba(79, 70, 229, 0.28);
+    }
+
+    #clearBtn {
+      background: #f9fafb;
+      color: #374151;
+      border-radius: 999px;
+      border: 1px solid #e5e7eb;
+    }
+
+    #clearBtn:hover {
+      background: #e5e7eb;
+    }
+
+    .list-section {
+      border-top: 1px solid #e5e7eb;
+      padding-top: 12px;
+    }
+
+    .list-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .list-header h2 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #111827;
+    }
+
+    .count {
+      font-size: 0.8rem;
+      color: #6b7280;
+    }
+
+    .add-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .add-row input {
+      flex: 1;
+      border-radius: 999px;
+      border: 1px solid #d1d5db;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      outline: none;
+    }
+
+    .add-row input:focus {
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 1px rgba(79, 70, 229, 0.2);
+    }
+
+    #addBtn {
+      padding-inline: 14px;
+      background: #10b981;
+      color: #ffffff;
+      font-size: 0.85rem;
+    }
+
+    #addBtn:hover {
+      background: #059669;
+    }
+
+    ul {
+      list-style: none;
+      max-height: 180px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 10px;
+      border-radius: 10px;
+      background: #f9fafb;
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .restaurant-name {
+      flex: 1;
+      margin-right: 8px;
+      color: #111827;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .delete-btn {
+      background: none;
+      border-radius: 999px;
+      border: 1px solid #fecaca;
+      padding: 3px 8px;
+      font-size: 0.75rem;
+      color: #b91c1c;
+      box-shadow: none;
+    }
+
+    .delete-btn:hover {
+      background: #fee2e2;
+    }
+
+    .empty-text {
+      font-size: 0.85rem;
+      color: #9ca3af;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    @media (max-width: 520px) {
+      .app {
+        margin: 16px;
+        padding: 18px 16px 22px;
+      }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      top: -10px;
+      width: 8px;
+      height: 14px;
+      background-color: red;
+      opacity: 0.8;
+      z-index: 9999;
+      animation: fall 2s linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+
+    /* Sponsor Overlay */
+    #sponsorOverlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 999999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.6s ease;
+    }
+
+    .sponsor-box {
+      text-align: center;
+      color: white;
+      animation: popScale 0.6s ease forwards;
+      padding: 20px 24px;
+    }
+
+    .sponsor-title {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .sponsor-name {
+      font-size: 2.4rem;
+      font-weight: 900;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 0.8s;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+
+    @keyframes popScale {
+      from { transform: scale(0.6); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }

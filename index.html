@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARS</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app">
+    <header class="app-header">
+      <h1>BARS – Restaurant Picker</h1>
+      <p>Can’t decide where to eat? Let this page choose for you.</p>
+    </header>
+
+    <section class="result-box">
+      <div class="result-label">Selected restaurant</div>
+      <div id="result">🍽️</div>
+    </section>
+
+    <div class="controls">
+      <button id="pickBtn">Pick Restaurant</button>
+      <button id="clearBtn" title="Clear result only">Clear</button>
+    </div>
+
+    <section class="list-section">
+      <div class="list-header">
+        <h2>Your restaurant list</h2>
+        <span class="count"><span id="count">0</span> items</span>
+      </div>
+
+      <div class="add-row">
+        <input
+          type="text"
+          id="newRestaurant"
+          placeholder="Type a restaurant name and press Add"
+        />
+        <button id="addBtn">Add</button>
+      </div>
+
+      <ul id="restaurantList"></ul>
+      <p class="empty-text" id="emptyText">
+        No restaurants yet. Add a few above.
+      </p>
+    </section>
+  </div>
+
+  <!-- Lucky Sponsor Overlay -->
+  <div id="sponsorOverlay">
+    <div class="sponsor-box">
+      <div class="sponsor-title">Lucky Sponsor of the Week</div>
+      <div class="sponsor-name" id="sponsorName"></div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
