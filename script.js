@@ -1,131 +1,98 @@
- // Initial restaurant list
-    let restaurants = [
-      "Kinnera",
-      "Bhimas",
-      "Biryanis",
-      "Haveli",
-      "Rest-in",
-      "Balagam",
-      "Sri Sri Sri",
-      "Gayatri",
-      "Bahubali",
-      "Amoga",
-      "Sitara",
-      "Pista"
-    ];
+let restaurants = [
+  "Kinnera","Bhimas","Biryanis","Haveli","Rest-in",
+  "Balagam","Sri Sri Sri","Gayatri","Bahubali",
+  "Amoga","Sitara","Pista"
+];
 
-    const resultEl = document.getElementById("result");
-    const pickBtn = document.getElementById("pickBtn");
-    const clearBtn = document.getElementById("clearBtn");
-    const listEl = document.getElementById("restaurantList");
-    const countEl = document.getElementById("count");
-    const emptyTextEl = document.getElementById("emptyText");
-    const newRestaurantInput = document.getElementById("newRestaurant");
-    const addBtn = document.getElementById("addBtn");
+const resultEl = document.getElementById("result");
+const sponsorResultEl = document.getElementById("sponsorResult");
+const listEl = document.getElementById("restaurantList");
+const emptyTextEl = document.getElementById("emptyText");
+const newRestaurantInput = document.getElementById("newRestaurant");
 
-    const sponsorOverlay = document.getElementById("sponsorOverlay");
-    const sponsorNameEl = document.getElementById("sponsorName");
+function renderList() {
+  listEl.innerHTML = "";
+  emptyTextEl.style.display = restaurants.length === 0 ? "block" : "none";
 
-    function renderList() {
-      listEl.innerHTML = "";
+  restaurants.forEach((name, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+      <span class="restaurant-name">${name}</span>
+      <button class="delete-btn" onclick="removeRestaurant(${index})">Remove</button>
+    `;
+    listEl.appendChild(li);
+  });
+}
 
-      emptyTextEl.style.display = restaurants.length === 0 ? "block" : "none";
+function removeRestaurant(i) {
+  restaurants.splice(i, 1);
+  renderList();
+}
 
-      restaurants.forEach((name, index) => {
-        const li = document.createElement("li");
+function launchConfetti() {
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement("div");
+    c.classList.add("confetti");
 
-        const span = document.createElement("span");
-        span.className = "restaurant-name";
-        span.textContent = name;
+    c.style.left = Math.random() * window.innerWidth + "px";
+    c.style.backgroundColor = "hsl(" + Math.random() * 360 + ", 80%, 60%)";
+    c.style.animationDuration = 1 + Math.random() * 1 + "s";
 
-        const del = document.createElement("button");
-        del.textContent = "Remove";
-        del.className = "delete-btn";
-        del.addEventListener("click", () => {
-          restaurants.splice(index, 1);
-          renderList();
-        });
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 2000);
+  }
+}
 
-        li.appendChild(span);
-        li.appendChild(del);
-        listEl.appendChild(li);
-      });
+function pickRandomRestaurant() {
+  if (restaurants.length === 0) {
+    alert("Add at least one restaurant!");
+    return;
+  }
 
-      countEl.textContent = restaurants.length;
-    }
+  // Sponsor
+  const sponsors = ["Ashok", "Ramakrishna", "Balu", "Sailaja"];
+  const randomSponsor = sponsors[Math.floor(Math.random() * sponsors.length)];
 
-    function launchConfetti() {
-      for (let i = 0; i < 40; i++) {
-        const confetti = document.createElement("div");
-        confetti.classList.add("confetti");
+  document.getElementById("sponsorName").textContent = randomSponsor;
 
-        confetti.style.left = Math.random() * window.innerWidth + "px";
-        confetti.style.backgroundColor =
-          "hsl(" + Math.random() * 360 + ", 80%, 60%)";
+  const overlay = document.getElementById("sponsorOverlay");
+  overlay.style.opacity = "1";
+  overlay.style.pointerEvents = "auto";
 
-        confetti.style.animationDuration = 1.5 + Math.random() * 1 + "s";
+  // After 2 sec → hide sponsor overlay → show restaurant
+  setTimeout(() => {
+    overlay.style.opacity = "0";
+    overlay.style.pointerEvents = "none";
 
-        document.body.appendChild(confetti);
+    const randomRestaurant =
+      restaurants[Math.floor(Math.random() * restaurants.length)];
 
-        setTimeout(() => confetti.remove(), 2000);
-      }
-    }
+    resultEl.textContent = randomRestaurant;
+    sponsorResultEl.textContent = "Sponsored by: " + randomSponsor;
 
-    function pickRandomRestaurant() {
-      if (restaurants.length === 0) {
-        alert("Add at least one restaurant first!");
-        return;
-      }
+    resultEl.classList.remove("pop");
+    void resultEl.offsetWidth;
+    resultEl.classList.add("pop");
 
-      // Step 1: Show Sponsor Animation
-      const sponsors = ["Ashok", "Ramakrishna", "Balu", "Sailaja"];
-      const randomSponsor =
-        sponsors[Math.floor(Math.random() * sponsors.length)];
+    launchConfetti();
+  }, 2000);
+}
 
-      sponsorNameEl.textContent = randomSponsor;
-      sponsorOverlay.style.opacity = "1";
-      sponsorOverlay.style.pointerEvents = "auto";
+function clearResult() {
+  resultEl.textContent = "— Click 'Pick Restaurant' —";
+  sponsorResultEl.textContent = "";
+}
 
-      // Step 2: After animation, hide overlay and show restaurant
-      setTimeout(() => {
-        sponsorOverlay.style.opacity = "0";
-        sponsorOverlay.style.pointerEvents = "none";
+function addRestaurant() {
+  const name = newRestaurantInput.value.trim();
+  if (!name) return;
+  restaurants.push(name);
+  newRestaurantInput.value = "";
+  renderList();
+}
 
-        // Now select restaurant
-        const index = Math.floor(Math.random() * restaurants.length);
-        const name = restaurants[index];
+document.getElementById("pickBtn").addEventListener("click", pickRandomRestaurant);
+document.getElementById("clearBtn").addEventListener("click", clearResult);
+document.getElementById("addBtn").addEventListener("click", addRestaurant);
 
-        resultEl.textContent = name;
-        resultEl.classList.remove("pop");
-        void resultEl.offsetWidth; // force reflow for animation
-        resultEl.classList.add("pop");
-
-        launchConfetti(); // Celebration
-      }, 2500); // 2.5-second sponsor display
-    }
-
-    function clearResult() {
-      resultEl.textContent = '— Click "Pick Restaurant" —';
-      resultEl.classList.remove("pop");
-    }
-
-    function addRestaurant() {
-      const name = newRestaurantInput.value.trim();
-      if (!name) return;
-      restaurants.push(name);
-      newRestaurantInput.value = "";
-      renderList();
-      newRestaurantInput.focus();
-    }
-
-    // Event listeners
-    pickBtn.addEventListener("click", pickRandomRestaurant);
-    clearBtn.addEventListener("click", clearResult);
-    addBtn.addEventListener("click", addRestaurant);
-
-    newRestaurantInput.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") addRestaurant();
-    });
-
-    // Initial render
-    renderList();
+renderList();
