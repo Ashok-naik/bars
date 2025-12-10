@@ -3,39 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BARS</title>
+  <title>bars</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="tlogo.jpg">
 </head>
 <body>
-   <div class="app">
-    <header class="app-header">
-      <h1>BARS – Restaurant Picker</h1>
-      <p>Can’t decide where to eat? Let this page choose for you.</p>
-    </header>
+  <div class="frame">
+    <main class="app" role="main" aria-labelledby="appTitle">
+      <div class="app-header">
+        <div class="brand">
+          <div class="logo" aria-hidden="true">B</div>
+          <div>
+            <h1 id="appTitle">🍻 BARS</h1>
+            <p class="small">Decide where to eat — make it fun 🎉</p>
+          </div>
+        </div>
+        <div class="meta small">Restaurants: <span id="count">0</span></div>
+      </div>
 
-    <section class="result-box">
-      <div id="result">🍽️</div>
-      <div id="sponsorResult"></div>
-    </section>
+      <section class="result-card" aria-live="polite">
+        <div class="result-image" id="resultImage">
+          <img id="resultImgTag" src="" alt="" style="display:none">
+        </div>
 
-    <div class="controls">
-      <button id="pickBtn">Pick Restaurant</button>
-      <button id="clearBtn">Clear</button>
-    </div>
+        <div id="result" aria-label="Selected restaurant">🍽️</div>
+        <div id="sponsorResult" class="small"></div>
 
-    <div class="add-row">
-      <input id="newRestaurant" type="text" placeholder="Enter restaurant..." />
-      <button id="addBtn">Add</button>
-    </div>
+        <div class="controls" role="group" aria-label="Actions">
+          <button id="pickBtn" class="btn btn-primary" aria-label="Pick a restaurant">Pick Restaurant</button>
+          <button id="clearBtn" class="btn btn-secondary" aria-label="Clear selection">Clear</button>
+        </div>
 
-    <ul id="restaurantList"></ul>
-    <p id="emptyText">No restaurants yet. Add a few above.</p>
+        <div class="add-row">
+          <input id="newRestaurant" class="input" type="text" inputmode="text" placeholder="Restaurant name" aria-label="Restaurant name">
+          <input id="newImageUrl" class="input small-input" type="url" placeholder="Image path or URL (optional)" aria-label="Image path or URL (optional)">
+          <button id="addBtn" class="btn" style="background:var(--success);color:white;border-radius:10px;min-width:82px">Add</button>
+        </div>
+
+        <div class="list" id="listWrapper" aria-live="polite"></div>
+
+        <div style="margin-top:12px;text-align:center;color:var(--muted);font-size:0.9rem">
+          Tip: for local images put files in <code>img/</code> and enter paths like <code>img/srisrisri</code> (without extension) — the app will try .jpg/.png/.webp.
+        </div>
+      </section>
+    </main>
   </div>
 
-  <!-- Sponsor Overlay -->
-  <div id="sponsorOverlay">
-    <div class="sponsor-box">
+  <div id="sponsorOverlay" aria-hidden="true">
+    <div class="sponsor-box" role="dialog" aria-modal="true">
       <div class="sponsor-title">Lucky Sponsor of the Week</div>
       <div class="sponsor-name" id="sponsorName"></div>
     </div>
