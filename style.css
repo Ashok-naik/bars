@@ -1,77 +1,66 @@
-* { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui; }
-
-    body {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: radial-gradient(circle at top, #fef3c7, #e5e7eb);
+:root{
+      --bg1:#fff9eb; --bg2:#eef2ff; --card:#ffffff; --muted:#6b7280;
+      --accent:#5b21b6; --success:#10b981; --radius:14px; --shadow:0 12px 36px rgba(15,23,42,0.12);
+      --max-width:820px; --gutter:18px;
     }
-
-    .app {
-      background: #ffffff;
-      padding: 24px 24px 28px;
-      border-radius: 18px;
-      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.18);
-      max-width: 480px;
-      width: 100%;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+    body{
+      font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:radial-gradient(circle at 10% 10%,var(--bg1) 0%, #f3f7ff 35%, var(--bg2) 100%);
+      color:#0f172a; display:flex; align-items:center; justify-content:center;
+      padding:20px; min-height:100vh;
     }
+    .frame{ width:100%; max-width:var(--max-width); display:grid; gap:18px; margin-inline:auto; padding:0 var(--gutter); }
+    .app{ background: linear-gradient(180deg, rgba(255,255,255,0.92), var(--card)); border-radius:calc(var(--radius)+6px); padding:18px; box-shadow:var(--shadow); border:1px solid rgba(15,23,42,0.04); overflow:visible; }
+    .app-header{ display:flex; align-items:center; gap:12px; justify-content:space-between }
+    .brand{ display:flex; gap:12px; align-items:center }
+    .logo{ width:52px;height:52px;border-radius:10px; display:grid; place-items:center; font-weight:800; color:#fff; background:linear-gradient(135deg,var(--accent),#7c3aed); box-shadow:0 8px 20px rgba(79,70,229,0.12); flex-shrink:0; }
+    .brand h1{ font-size:1.05rem; margin:0 }
+    .brand p{ font-size:0.86rem; color:var(--muted); margin:0 }
+    .meta{ font-size:0.9rem; color:var(--muted) }
 
-    .app-header { text-align: center; margin-bottom: 16px; }
-    .app-header h1 { font-size: 1.7rem; font-weight: 700; margin-bottom: 4px; }
-    .app-header p { font-size: 0.9rem; color: #6b7280; }
+    .result-card{ margin-top:12px; border-radius:12px; padding:14px; background:linear-gradient(180deg, rgba(91,33,182,0.03), rgba(0,0,0,0.01)); border:1px solid rgba(15,23,42,0.03); display:flex; flex-direction:column; gap:10px; align-items:center; text-align:center; }
+    .result-image { width:100%; max-width:360px; height:200px; border-radius:12px; overflow:hidden; display:grid; place-items:center; background:linear-gradient(180deg,#fafafa,#fff); box-shadow:0 8px 26px rgba(15,23,42,0.04); }
+    .result-image img{ width:100%; height:100%; object-fit:cover; display:block; }
 
-    .result-box {
-      margin: 16px 0 20px;
-      padding: 16px;
-      border-radius: 14px;
-      background: #f3f4ff;
-      border: 1px solid #e5e7eb;
-      text-align: center;
+    #result{ font-size:1.35rem; font-weight:800; min-height:48px; padding:8px 12px; border-radius:10px; width:100%; word-break:break-word; }
+    #result.pop{ transform:scale(1.04); transition:transform .18s cubic-bezier(.2,.9,.2,1); }
+
+    #sponsorResult{ font-size:0.95rem; color:var(--muted); font-weight:700 }
+
+    .controls{ display:flex; gap:10px; width:100%; margin-top:6px; flex-wrap:wrap }
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 14px; border-radius:12px; font-weight:800; cursor:pointer; border:0; min-height:48px; flex:1; }
+    .btn-primary{ background:linear-gradient(90deg,var(--accent),#8b5cf6); color:white; box-shadow:0 10px 28px rgba(79,70,229,0.12); }
+    .btn-secondary{ background:transparent; border:1px solid rgba(15,23,42,0.06); color:#0f172a; min-width:110px; flex:0 1 110px; }
+
+    .add-row{ display:flex; gap:8px; margin-top:12px; align-items:center; flex-wrap:wrap }
+    .input{ flex:1; min-height:46px; border-radius:10px; padding:10px 12px; border:1px solid rgba(15,23,42,0.06); background:linear-gradient(180deg, rgba(255,255,255,0.6), rgba(250,250,250,0.6)); font-size:0.95rem; outline:none; }
+    .input:focus{ box-shadow:0 8px 24px rgba(79,70,229,0.06); border-color: rgba(91,33,182,0.5) }
+    .add-row .small-input{ width:150px; min-width:120px; }
+
+    .list{ margin-top:14px; display:flex; flex-direction:column; gap:10px; max-height:300px; overflow:auto; padding-right:6px; }
+    .list-item{ display:flex; justify-content:space-between; align-items:center; padding:8px 10px; border-radius:10px; background:linear-gradient(180deg,#fff,#fbfbff); border:1px solid rgba(15,23,42,0.03); font-weight:700; gap:10px; }
+    .list-left{ display:flex; gap:10px; align-items:center; max-width:70%; }
+    .thumb{ width:56px; height:44px; border-radius:8px; overflow:hidden; background:#f3f4f6; display:grid; place-items:center; }
+    .thumb img{ width:100%; height:100%; object-fit:cover; display:block }
+    .small{ font-size:0.88rem; color:var(--muted) }
+    .remove{ background:transparent; border:0; color:#ef4444; font-weight:800; padding:6px 8px; border-radius:8px; cursor:pointer }
+
+    .confetti{ position:fixed; top:-20px; width:8px; height:12px; border-radius:2px; z-index:9999; opacity:0.95; transform-origin:center; animation:fall linear forwards; pointer-events:none }
+    @keyframes fall{ to{ transform: translateY(110vh) rotate(360deg); opacity:0 } }
+
+    #sponsorOverlay{ position:fixed; inset:0; display:grid; place-items:center; z-index:99999; background: linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.82)); opacity:0; pointer-events:none; transition:opacity .28s ease; padding:18px; -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); }
+    .sponsor-box{ width:100%; max-width:560px; padding:20px; border-radius:12px; text-align:center; background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.06); color:white; box-shadow:0 20px 60px rgba(2,6,23,0.6) }
+    .sponsor-title{ font-size:1.05rem; font-weight:800; opacity:0.95 }
+    .sponsor-name{ font-size:2.0rem; font-weight:900; margin-top:8px; color:#fff7cc; text-shadow: 0 8px 20px rgba(0,0,0,0.45) }
+
+    @media (max-width:520px){
+      .logo{ width:44px;height:44px }
+      #result{ font-size:1.15rem; min-height:56px; padding:8px }
+      .sponsor-name{ font-size:1.4rem }
+      .btn{ min-height:44px; padding:10px 12px; border-radius:10px }
+      .add-row .small-input{ width:110px }
+      .thumb{ width:48px; height:36px }
+      .result-image{ height:160px; max-width:100% }
     }
-
-    #result { font-size: 1.6rem; font-weight: 700; margin-bottom: 5px; }
-    #sponsorResult { font-size: 1rem; color: #4b5563; font-weight: 600; }
-
-    #result.pop { transform: scale(1.08); opacity: 0.9; transition: 0.2s; }
-
-    .controls { display: flex; gap: 10px; margin-bottom: 18px; }
-
-    button {
-      border: none; border-radius: 999px; padding: 10px 16px;
-      font-size: 0.95rem; font-weight: 600; cursor: pointer;
-    }
-
-    #pickBtn { flex: 1; background: #4f46e5; color: #fff; }
-    #clearBtn { background: #f9fafb; border: 1px solid #ddd; }
-
-    .add-row { display: flex; gap: 8px; margin-bottom: 10px; }
-    .add-row input { flex: 1; padding: 8px 12px; border-radius: 999px; border: 1px solid #ccc; }
-
-    ul { list-style: none; max-height: 180px; overflow-y: auto; }
-    li {
-      background: #f9fafb; padding: 6px 10px; border-radius: 10px;
-      display: flex; justify-content: space-between; margin-bottom: 4px;
-    }
-
-    /* Confetti */
-    .confetti {
-      position: fixed; top: -10px; width: 8px; height: 14px;
-      opacity: 0.8; animation: fall 2s linear forwards; z-index: 9999;
-    }
-
-    @keyframes fall {
-      to { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-    }
-
-    /* Sponsor Overlay */
-    #sponsorOverlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0; pointer-events: none; transition: opacity 0.6s ease;
-      z-index: 999999;
-    }
-
-    .sponsor-box { text-align: center; color: white; }
-    .sponsor-title { font-size: 2rem; font-weight: 700; }
-    .sponsor-name { font-size: 2.4rem; font-weight: 900; margin-top: 10px; }
